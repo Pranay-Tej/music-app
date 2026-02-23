@@ -14,6 +14,6 @@ create table songs(
 	foreign key (album_id) references albums(id)
 );
 
-
 ---
+
 drop table songs;
