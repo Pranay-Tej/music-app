@@ -1,0 +1,15 @@
+create table albums(
+	id uuid primary key default gen_random_uuid(),
+	title text not null,
+	cover_art text,
+	created_at timestamptz default now(),
+	updated_at timestamptz default now(),
+	-- fk
+	artist_id uuid,
+	-- fk
+	foreign key (artist_id) references artists(id)
+);
+
+---
+
+DROP TABLE albums;
