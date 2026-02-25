@@ -12,4 +12,5 @@ A music app database schema built to learn SQL, schema design, and migrations wi
 - [x] Playlists table with user FK and cascade delete
 - [x] Playlist-songs junction table (composite PK, cascade deletes)
 - [x] Add `NOT NULL` to `created_at`/`updated_at` across all tables (requires handling existing NULL values via migration)
+- [x] Add date fields to users table
 - [ ] Soft deletes for artists (add `deleted_at` column, scheduled cleanup job)
