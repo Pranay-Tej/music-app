@@ -40,20 +40,6 @@ set not null;
 alter table songs
 alter column updated_at
 set not null;
---- users clean
-update users
-set created_at = now()
-where created_at is null;
-update users
-set updated_at = now()
-where updated_at is null;
---- users not null
-alter table users
-alter column created_at
-set not null;
-alter table users
-alter column updated_at
-set not null;
 --- playlists clean
 update playlists
 set created_at = now()
@@ -91,11 +77,6 @@ alter column updated_at drop not null;
 alter table songs
 alter column created_at drop not null;
 alter table songs
-alter column updated_at drop not null;
---- users
-alter table users
-alter column created_at drop not null;
-alter table users
 alter column updated_at drop not null;
 --- playlists
 alter table playlists

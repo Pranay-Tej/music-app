@@ -8,3 +8,5 @@ create table playlist_songs(
 	foreign key (playlist_id) references playlists(id) on delete cascade,
 	foreign key (song_id) references songs(id) on delete cascade
 );
+---
+drop table playlist_songs;
