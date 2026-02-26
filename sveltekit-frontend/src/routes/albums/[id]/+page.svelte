@@ -1,11 +1,8 @@
 <script lang="ts">
-	let { data } = $props();
+	import { formatDuration } from '$lib/utils.js';
 
-	function formatDuration(seconds: number) {
-		const mins = Math.floor(seconds / 60);
-		const secs = seconds % 60;
-		return `${mins}:${secs.toString().padStart(2, '0')}`;
-	}
+
+	let { data } = $props();
 </script>
 
 <svelte:head>

@@ -11,6 +11,7 @@
 <nav>
 	<a href="/">Home</a>
 	<a href="/artists">Artists</a>
+	<a href="/search">Search</a>
 </nav>
 
 <main>
