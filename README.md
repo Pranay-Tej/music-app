@@ -17,10 +17,10 @@ A music app database schema built to learn SQL, schema design, and migrations wi
 - [ ] Scheduled cleanup job for soft-deleted artists (30 days)
 - [ ] Playlists
   - [x] View my playlists
-  - [ ] View playlist details (songs, total duration)
-    - [ ] filter out soft-deleted artists
+  - [x] View playlist details (songs, total duration)
+    - [x] filter out soft-deleted artists
+    - [x] get album, artist names
     - [ ] optimize 3 separate sql queries
-    - [ ] get album, artist names
   - [ ] Create playlist
   - [ ] Edit playlist (name, description)
   - [ ] Delete playlist

@@ -21,9 +21,9 @@
 
 <a href={resolve(`/playlists`)}>&larr; Playlists</a>
 
-<pre>
+<!-- <pre>
     {JSON.stringify(data, null, 2)}    
-</pre>
+</pre> -->
 
 <h1>{data.playlist.name}</h1>
 
@@ -37,9 +37,9 @@
 	{#each data.playlistSongs as ps (ps.song_id)}
 		<li>
 			<p>{ps.song_title}</p>
-			&mdash;<a href={resolve(`/artists/${ps.artist_id}`)}>{ps.artist_id}</a>
+			&mdash;<a href={resolve(`/artists/${ps.artist_id}`)}>{ps.artist_name}</a>
 			{#if ps.album_id}
-				&middot; <a href={resolve(`/albums/${ps.album_id}`)}>{ps.album_id}</a>
+				&middot; <a href={resolve(`/albums/${ps.album_id}`)}>{ps.album_title}</a>
 			{/if}
 		</li>
 	{/each}
