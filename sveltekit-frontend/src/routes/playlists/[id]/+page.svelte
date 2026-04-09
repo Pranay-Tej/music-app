@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { enhance } from '$app/forms';
 
 	let { data } = $props();
 
@@ -26,6 +27,10 @@
 </pre> -->
 
 <h1>{data.playlist.name}</h1>
+
+<form method="POST" action="?/delete" use:enhance>
+	<button type="submit">Delete Playlist</button>
+</form>
 
 {#if data.playlist.description}
 	<p>{data.playlist.description}</p>

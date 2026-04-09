@@ -24,6 +24,6 @@ A music app database schema built to learn SQL, schema design, and migrations wi
     - [ ] merge playlistSongs and stats into single query with OVER
   - [x] Create playlist
   - [ ] Edit playlist (name, description)
-  - [ ] Delete playlist
+  - [x] Delete playlist
   - [ ] Add song to playlist
   - [ ] Remove song from playlist

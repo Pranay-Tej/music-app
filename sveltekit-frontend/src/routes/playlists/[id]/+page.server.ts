@@ -1,6 +1,6 @@
 import { sql } from '$lib/server/db';
-import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { error, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const playlist = await sql`SELECT id, name, description, created_at, updated_at
@@ -35,3 +35,10 @@ export const load: PageServerLoad = async ({ params }) => {
 		stats: playlistStats[0]
 	};
 };
+
+export const actions = {
+	delete: async ({ params }) => {
+		await sql`DELETE FROM playlists WHERE id = ${params.id}`;
+		redirect(303, '/playlists');
+	}
+} satisfies Actions;
