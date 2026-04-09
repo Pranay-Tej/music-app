@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	let { data } = $props();
 </script>
 
@@ -6,7 +7,7 @@
 	<title>{data.artist.name}</title>
 </svelte:head>
 
-<a href="/artists">&larr; All Artists</a>
+<a href={resolve(`/artists`)}>&larr; All Artists</a>
 
 <h1>{data.artist.name}</h1>
 
@@ -15,9 +16,8 @@
 {/if}
 
 <h2>Albums ({data.albums.length})</h2>
-
-{#each data.albums as album}
+{#each data.albums as album (album.id)}
 	<section>
-		<h3><a href="/albums/{album.id}">{album.title}</a></h3>
+		<h3><a href={resolve(`/albums/${album.id}`)}>{album.title}</a></h3>
 	</section>
 {/each}

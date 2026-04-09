@@ -15,3 +15,14 @@ A music app database schema built to learn SQL, schema design, and migrations wi
 - [x] Add date fields to users table
 - [x] Soft deletes for artists (add `deleted_at` column, scheduled cleanup job)
 - [ ] Scheduled cleanup job for soft-deleted artists (30 days)
+- [ ] Playlists
+  - [x] View my playlists
+  - [ ] View playlist details (songs, total duration)
+    - [ ] filter out soft-deleted artists
+    - [ ] optimize 3 separate sql queries
+    - [ ] get album, artist names
+  - [ ] Create playlist
+  - [ ] Edit playlist (name, description)
+  - [ ] Delete playlist
+  - [ ] Add song to playlist
+  - [ ] Remove song from playlist

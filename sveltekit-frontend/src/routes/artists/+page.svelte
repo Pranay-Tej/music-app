@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+
 	let { data } = $props();
 </script>
 
@@ -11,10 +13,11 @@
 <!-- <pre>
 	{JSON.stringify(data, null, 2)}
 </pre> -->
+
 <ul>
-	{#each data.artists as artist}
+	{#each data.artists as artist (artist.id)}
 		<li>
-			<a href="/artists/{artist.id}">{artist.name}</a>
+			<a href={resolve(`/artists/${artist.id}`)}>{artist.name}</a>
 			{#if artist.about}
 				<p>{artist.about}</p>
 			{/if}

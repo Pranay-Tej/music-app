@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { formatDuration } from '$lib/utils.js';
 
 	let { data } = $props();
@@ -15,7 +16,6 @@
 	<button type="submit">Search</button>
 </form>
 
-
 <!-- <pre>
 	{JSON.stringify(data, null, 2)}
 </pre> -->
@@ -24,15 +24,15 @@
 	{#if data.songs.length > 0}
 		<p>{data.songs.length} result{data.songs.length === 1 ? '' : 's'} for "{data.query}"</p>
 		<ul>
-			{#each data.songs as song}
+			{#each data.songs as song (song.id)}
 				<li>
 					{song.title}
 					{#if song.duration}
 						<span>({formatDuration(song.duration)})</span>
 					{/if}
-					— <a href="/artists/{song.artist_id}">{song.artist_name}</a>
+					— <a href={resolve(`/artists/${song.artist_id}`)}>{song.artist_name}</a>
 					{#if song.album_id}
-						· <a href="/albums/{song.album_id}">{song.album_title}</a>
+						· <a href={resolve(`/albums/${song.album_id}`)}>{song.album_title}</a>
 					{/if}
 				</li>
 			{/each}
