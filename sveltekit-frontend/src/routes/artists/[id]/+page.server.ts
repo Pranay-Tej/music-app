@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const artists = await sql`SELECT * FROM artists WHERE id = ${params.id}`;
+	const artists = await sql`SELECT * FROM artists WHERE id = ${params.id} AND deleted_at IS NULL`;
 
 	if (artists.length === 0) {
 		error(404, 'Artist not found');

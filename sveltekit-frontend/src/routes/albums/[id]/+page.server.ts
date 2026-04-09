@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		SELECT a.id, a.title, a.cover_art, ar.id AS artist_id, ar.name AS artist_name
 		FROM albums a
 		JOIN artists ar ON ar.id = a.artist_id
-		WHERE a.id = ${params.id}
+		WHERE a.id = ${params.id} AND ar.deleted_at IS NULL
 	`;
 
 	if (albums.length === 0) {

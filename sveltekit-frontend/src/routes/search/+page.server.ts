@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ url }) => {
 		FROM songs s
 		JOIN artists ar ON ar.id = s.artist_id
 		LEFT JOIN albums al ON al.id = s.album_id
-		WHERE s.title ILIKE ${'%' + q.trim() + '%'}
+		WHERE s.title ILIKE ${'%' + q.trim() + '%'} AND ar.deleted_at IS NULL
 		ORDER BY s.title
 	`;
 
