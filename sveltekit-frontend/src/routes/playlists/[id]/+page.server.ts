@@ -1,5 +1,5 @@
 import { sql } from '$lib/server/db';
-import { error, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -37,6 +37,19 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
+	edit: async ({ params, request }) => {
+		const formData = await request.formData();
+		const name = formData.get('name')?.toString()?.trim();
+		const description = formData.get('description')?.toString()?.trim() || null;
+
+		if (!name) {
+			return fail(400, { error: 'Playlist name is required', name, description });
+		}
+
+		await sql`UPDATE playlists
+        SET name = ${name}, description = ${description}, updated_at = NOW()
+        WHERE id = ${params.id}`;
+	},
 	delete: async ({ params }) => {
 		await sql`DELETE FROM playlists WHERE id = ${params.id}`;
 		redirect(303, '/playlists');
