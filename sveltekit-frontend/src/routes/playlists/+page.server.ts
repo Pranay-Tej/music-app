@@ -1,6 +1,7 @@
 import { USER_ID } from '$env/static/private';
 import { sql } from '$lib/server/db';
-import type { PageServerLoad } from './$types';
+import { fail } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	const userId = USER_ID;
@@ -11,3 +12,20 @@ export const load: PageServerLoad = async () => {
 
 	return { playlists };
 };
+
+export const actions = {
+	create: async ({ request }) => {
+		const formData = await request.formData();
+		const name = formData.get('name')?.toString()?.trim();
+		const description = formData.get('description')?.toString()?.trim() || null;
+
+		if (!name) {
+			return fail(400, { error: 'Playlist name is required', name, description });
+		}
+
+		await sql`INSERT INTO playlists
+		(name, description, user_id)
+		VALUES
+		(${name}, ${description}, ${USER_ID})`;
+	}
+} satisfies Actions;
