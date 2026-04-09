@@ -20,7 +20,8 @@ A music app database schema built to learn SQL, schema design, and migrations wi
   - [x] View playlist details (songs, total duration)
     - [x] filter out soft-deleted artists
     - [x] get album, artist names
-    - [ ] optimize 3 separate sql queries
+    - [x] optimize 3 separate sql queries
+    - [ ] merge playlistSongs and stats into single query with OVER
   - [ ] Create playlist
   - [ ] Edit playlist (name, description)
   - [ ] Delete playlist
