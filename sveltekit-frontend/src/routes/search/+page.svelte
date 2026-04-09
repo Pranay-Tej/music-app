@@ -14,6 +14,9 @@
 <form method="GET">
 	<input type="text" name="q" value={data.query} placeholder="Search by song title..." />
 	<button type="submit">Search</button>
+	{#if data.query.trim()}
+		<a href={resolve('/search')}>Clear</a>
+	{/if}
 </form>
 
 <!-- <pre>
