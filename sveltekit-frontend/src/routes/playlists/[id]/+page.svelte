@@ -3,6 +3,8 @@
 	import { enhance } from '$app/forms';
 
 	let { data, form } = $props();
+	let editing = $state(false);
+	let submitting = $state(false);
 
 	function formatDuration(totalSeconds: number): string {
 		const hours = Math.floor(totalSeconds / 3600);
@@ -23,22 +25,59 @@
 <a href={resolve(`/playlists`)}>&larr; Playlists</a>
 
 <!-- <pre>
-    {JSON.stringify(data, null, 2)}    
+    {JSON.stringify(data, null, 2)}
 </pre> -->
 
-<h1>{data.playlist.name}</h1>
-
-<form method="POST" action="?/edit" use:enhance>
-	<input type="text" name="name" value={form?.name ?? data.playlist.name} required />
-	<input type="text" name="description" placeholder="Description (optional)" value={form?.description ?? data.playlist.description ?? ''} />
-	<button type="submit">Save</button>
-	{#if form?.error}
-		<p>{form.error}</p>
+{#if editing}
+	<form
+		method="POST"
+		action="?/edit"
+		use:enhance={() => {
+			submitting = true;
+			return async ({ update }) => {
+				await update();
+				submitting = false;
+				editing = false;
+			};
+		}}
+	>
+		<input type="text" name="name" value={form?.name ?? data.playlist.name} required />
+		<input
+			type="text"
+			name="description"
+			placeholder="Description (optional)"
+			value={form?.description ?? data.playlist.description ?? ''}
+		/>
+		<button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Save'}</button>
+		<button type="button" onclick={() => (editing = false)} disabled={submitting}>Cancel</button>
+		{#if form?.error}
+			<p>{form.error}</p>
+		{/if}
+	</form>
+{:else}
+	<h1>{data.playlist.name}</h1>
+	{#if data.playlist.description}
+		<p>{data.playlist.description}</p>
 	{/if}
-</form>
+	<button onclick={() => (editing = true)}>Edit</button>
+{/if}
 
-<form method="POST" action="?/delete" use:enhance>
-	<button type="submit">Delete Playlist</button>
+<hr />
+
+<form
+	method="POST"
+	action="?/delete"
+	use:enhance={() => {
+		submitting = true;
+		return async ({ update }) => {
+			await update();
+			submitting = false;
+		};
+	}}
+>
+	<button type="submit" disabled={submitting}
+		>{submitting ? 'Deleting...' : 'Delete Playlist'}</button
+	>
 </form>
 
 <h2>{data.stats.total_songs} Songs &middot; {formatDuration(data.stats.total_duration)}</h2>
