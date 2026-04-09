@@ -90,6 +90,10 @@
 			{#if ps.album_id}
 				&middot; <a href={resolve(`/albums/${ps.album_id}`)}>{ps.album_title}</a>
 			{/if}
+			<form method="POST" action="?/removeSong" use:enhance style="display:inline">
+				<input type="hidden" name="song_id" value={ps.song_id} />
+				<button type="submit">Remove</button>
+			</form>
 		</li>
 	{/each}
 </ul>

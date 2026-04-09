@@ -50,6 +50,18 @@ export const actions = {
         SET name = ${name}, description = ${description}, updated_at = NOW()
         WHERE id = ${params.id}`;
 	},
+	removeSong: async ({ params, request }) => {
+		const formData = await request.formData();
+		const songId = formData.get('song_id')?.toString();
+
+		if (!songId) {
+			return fail(400, { error: 'Song ID is required' });
+		}
+
+		await sql`DELETE FROM playlist_songs
+        WHERE
+        playlist_id = ${params.id} AND song_id = ${songId}`;
+	},
 	delete: async ({ params }) => {
 		await sql`DELETE FROM playlists WHERE id = ${params.id}`;
 		redirect(303, '/playlists');
