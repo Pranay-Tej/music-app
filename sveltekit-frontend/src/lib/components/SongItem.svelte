@@ -1,18 +1,11 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import type { Playlist, SongWithDetails } from '$lib/types';
 	import { formatDuration } from '$lib/utils.js';
 
 	type Props = {
-		song: {
-			id: string;
-			title: string;
-			duration?: number;
-			artist_id?: string;
-			artist_name?: string;
-			album_id?: string;
-			album_title?: string;
-		};
-		playlists: { id: string; name: string }[];
+		song: SongWithDetails;
+		playlists: Playlist[];
 		showArtist?: boolean;
 		showAlbum?: boolean;
 	};

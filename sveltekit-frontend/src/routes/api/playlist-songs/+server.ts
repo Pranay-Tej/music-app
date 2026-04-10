@@ -9,12 +9,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ error: 'playlist_id and song_id are required' }, { status: 400 });
 	}
 
-	await sql`INSERT INTO
-	playlist_songs
-	(playlist_id, song_id)
-	VALUES
-	(${playlist_id}, ${song_id})
-	ON CONFLICT (playlist_id, song_id) DO NOTHING`;
+	await sql`
+		INSERT INTO playlist_songs (playlist_id, song_id)
+		VALUES (${playlist_id}, ${song_id})
+		ON CONFLICT (playlist_id, song_id) DO NOTHING
+	`;
 
 	return json({ success: true });
 };

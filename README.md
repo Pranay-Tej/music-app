@@ -28,3 +28,4 @@ A music app database schema built to learn SQL, schema design, and migrations wi
   - [x] Add song to playlist (dropdown per song)
   - [ ] Add song to playlist (checkbox popup with all playlists, with both remove and add)
   - [x] Remove song from playlist
+- [ ] Move SQL queries to separate `.sql` files for auto-formatting with `prettier-plugin-sql`
