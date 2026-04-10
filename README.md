@@ -25,5 +25,6 @@ A music app database schema built to learn SQL, schema design, and migrations wi
   - [x] Create playlist
   - [x] Edit playlist (name, description)
   - [x] Delete playlist
-  - [ ] Add song to playlist
+  - [x] Add song to playlist (dropdown per song)
+  - [ ] Add song to playlist (checkbox popup with all playlists, with both remove and add)
   - [x] Remove song from playlist

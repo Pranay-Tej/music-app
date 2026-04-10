@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { formatDuration } from '$lib/utils.js';
+	import SongItem from '$lib/components/SongItem.svelte';
 
 	let { data } = $props();
 </script>
@@ -17,11 +17,6 @@
 
 <ul>
 	{#each data.songs as song (song.id)}
-		<li>
-			{song.title}
-			{#if song.duration}
-				<span>({formatDuration(song.duration)})</span>
-			{/if}
-		</li>
+		<SongItem {song} playlists={data.playlists} showArtist={false} showAlbum={false} />
 	{/each}
 </ul>
