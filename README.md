@@ -1,6 +1,6 @@
 # Music App
 
-A music app database schema built to learn SQL, schema design, and migrations with PostgreSQL.
+A music app database schema, schema design, and migrations with PostgreSQL.
 
 ## Tasks
 
