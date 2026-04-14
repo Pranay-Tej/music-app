@@ -31,7 +31,7 @@ A music app database schema, schema design, and migrations with PostgreSQL.
 - [x] Universal Search (songs, artists and albums) (returning songs with artist, album links)
 - [ ] Show search results as types (songs, artists and albums)
 - [ ] Fuzzy search (songs, artists and albums)
-- [ ] Followers/Social (self-referential many-to-many, "playlists by people I follow")
+- [x] Followers/Social (self-referential many-to-many)
 - [ ] Song Genres/Tags (many-to-many junction table, multi-table joins)
 - [ ] Listening History/Play Counts (aggregation, GROUP BY, "most played", "recently played")
 - [ ] Reviews/Ratings (aggregation, HAVING, LEFT JOIN filtering, "top rated albums")

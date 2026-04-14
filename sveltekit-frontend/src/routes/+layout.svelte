@@ -15,10 +15,12 @@
 			<a href={resolve('/')}>Discover</a>
 			<a href={resolve('/artists')}>Artists</a>
 			<a href={resolve('/playlists')}>Playlists</a>
+			<a href={resolve('/users')}>Users</a>
 		</div>
 		{#if data.userInfo}
 			<div>
-				<span>{data.userInfo.display_name}</span>
+				<a href={resolve(`/users/${data.userInfo.id}`)}>My Profile ({data.userInfo.display_name})</a
+				>
 				<a href={resolve('/logout')}>Logout</a>
 			</div>
 		{:else}
