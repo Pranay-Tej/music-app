@@ -3,18 +3,21 @@ import type { Playlist, PlaylistSongWithDetails, PlaylistStats } from '$lib/type
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
 	const playlist = (await sql`
 		SELECT
-			id,
-			name,
-			description,
-			user_id,
-			created_at,
-			updated_at
+			playlists.id,
+			playlists.name,
+			playlists.description,
+			playlists.user_id,
+			playlists.created_at,
+			playlists.updated_at,
+			users.display_name AS owner_display_name
 		FROM playlists
-		WHERE id = ${params.id}
-	`) as Playlist[];
+		JOIN users
+			ON playlists.user_id = users.id
+		WHERE playlists.id = ${params.id}
+	`) as (Playlist & { owner_display_name: string })[];
 
 	if (playlist.length === 0) {
 		error(404, 'Playlist not found');
@@ -54,12 +57,15 @@ export const load: PageServerLoad = async ({ params }) => {
 	return {
 		playlist: playlist[0],
 		playlistSongs: playlistSongs,
-		stats: playlistStats[0]
+		stats: playlistStats[0],
+		isOwner: locals.userInfo?.id === playlist[0].user_id
 	};
 };
 
 export const actions = {
-	edit: async ({ params, request }) => {
+	edit: async ({ params, request, locals }) => {
+		if (!locals.userInfo) redirect(303, '/login');
+
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString()?.trim();
 		const description = formData.get('description')?.toString()?.trim() || null;
@@ -75,9 +81,12 @@ export const actions = {
 				description = ${description},
 				updated_at = NOW()
 			WHERE id = ${params.id}
+				AND user_id = ${locals.userInfo.id}
 		`;
 	},
-	removeSong: async ({ params, request }) => {
+	removeSong: async ({ params, request, locals }) => {
+		if (!locals.userInfo) redirect(303, '/login');
+
 		const formData = await request.formData();
 		const songId = formData.get('song_id')?.toString();
 
@@ -87,14 +96,22 @@ export const actions = {
 
 		await sql`
 			DELETE FROM playlist_songs
-			WHERE playlist_id = ${params.id}
+			WHERE playlist_id = (
+				SELECT id
+				FROM playlists
+				WHERE id = ${params.id}
+					AND user_id = ${locals.userInfo.id}
+			)
 				AND song_id = ${songId}
 		`;
 	},
-	delete: async ({ params }) => {
+	delete: async ({ params, locals }) => {
+		if (!locals.userInfo) redirect(303, '/login');
+
 		await sql`
 			DELETE FROM playlists
 			WHERE id = ${params.id}
+				AND user_id = ${locals.userInfo.id}
 		`;
 		redirect(303, '/playlists');
 	}

@@ -28,7 +28,7 @@
     {JSON.stringify(data, null, 2)}
 </pre> -->
 
-{#if editing}
+{#if data.isOwner && editing}
 	<form
 		method="POST"
 		action="?/edit"
@@ -56,29 +56,34 @@
 	</form>
 {:else}
 	<h1>{data.playlist.name}</h1>
+	<p>by <a href={resolve(`/users/${data.playlist.user_id}`)}>{data.playlist.owner_display_name}</a></p>
 	{#if data.playlist.description}
 		<p>{data.playlist.description}</p>
 	{/if}
-	<button onclick={() => (editing = true)}>Edit</button>
+	{#if data.isOwner}
+		<button onclick={() => (editing = true)}>Edit</button>
+	{/if}
 {/if}
 
-<hr />
+{#if data.isOwner}
+	<hr />
 
-<form
-	method="POST"
-	action="?/delete"
-	use:enhance={() => {
-		submitting = true;
-		return async ({ update }) => {
-			await update();
-			submitting = false;
-		};
-	}}
->
-	<button type="submit" disabled={submitting}
-		>{submitting ? 'Deleting...' : 'Delete Playlist'}</button
+	<form
+		method="POST"
+		action="?/delete"
+		use:enhance={() => {
+			submitting = true;
+			return async ({ update }) => {
+				await update();
+				submitting = false;
+			};
+		}}
 	>
-</form>
+		<button type="submit" disabled={submitting}
+			>{submitting ? 'Deleting...' : 'Delete Playlist'}</button
+		>
+	</form>
+{/if}
 
 <h2>{data.stats.total_songs} Songs &middot; {formatDuration(data.stats.total_duration)}</h2>
 
@@ -90,10 +95,12 @@
 			{#if ps.album_id}
 				&middot; <a href={resolve(`/albums/${ps.album_id}`)}>{ps.album_title}</a>
 			{/if}
-			<form method="POST" action="?/removeSong" use:enhance style="display:inline">
-				<input type="hidden" name="song_id" value={ps.song_id} />
-				<button type="submit">Remove</button>
-			</form>
+			{#if data.isOwner}
+				<form method="POST" action="?/removeSong" use:enhance style="display:inline">
+					<input type="hidden" name="song_id" value={ps.song_id} />
+					<button type="submit">Remove</button>
+				</form>
+			{/if}
 		</li>
 	{/each}
 </ul>
