@@ -25,7 +25,8 @@ export const load: PageServerLoad = async ({ url }) => {
 		FROM songs s
 		JOIN artists ar ON ar.id = s.artist_id
 		LEFT JOIN albums al ON al.id = s.album_id
-		WHERE s.title ILIKE ${'%' + q.trim() + '%'}
+		WHERE (to_tsvector(s.title) || to_tsvector(ar.name) || to_tsvector(COALESCE(al.title, '')))
+			@@ plainto_tsquery(${q})
 			AND ar.deleted_at IS NULL
 		ORDER BY s.title
 	`) as SongWithDetails[];

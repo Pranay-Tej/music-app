@@ -10,9 +10,8 @@
 </svelte:head>
 
 <nav>
-	<a href={resolve('/')}>Home</a>
+	<a href={resolve('/')}>Discover</a>
 	<a href={resolve('/artists')}>Artists</a>
-	<a href={resolve('/search')}>Search</a>
 	<a href={resolve('/playlists')}>Playlists</a>
 </nav>
 

@@ -28,5 +28,8 @@ A music app database schema, schema design, and migrations with PostgreSQL.
   - [x] Add song to playlist (dropdown per song)
   - [ ] Add song to playlist (checkbox popup with all playlists, with both remove and add)
   - [x] Remove song from playlist
+- [x] Universal Search (songs, artists and albums) (returning songs with artist, album links)
+- [ ] Show search results as types (songs, artists and albums)
+- [ ] Fuzzy search (songs, artists and albums)
 - [ ] Move SQL queries to separate `.sql` files for auto-formatting with `prettier-plugin-sql`
 - [ ] Set up dbmate for migration management (schema dump, environment tracking)
