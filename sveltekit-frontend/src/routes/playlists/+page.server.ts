@@ -1,11 +1,13 @@
-import { USER_ID } from '$env/static/private';
 import { sql } from '$lib/server/db';
 import type { Playlist } from '$lib/types';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-	const userId = USER_ID;
+export const load: PageServerLoad = async ({ locals }) => {
+	if (!locals.userInfo) {
+		redirect(303, '/login');
+	}
+
 	const playlists = (await sql`
 		SELECT
 			id,
@@ -15,7 +17,7 @@ export const load: PageServerLoad = async () => {
 			created_at,
 			updated_at
 		FROM playlists
-		WHERE user_id = ${userId}
+		WHERE user_id = ${locals.userInfo.id}
 		ORDER BY updated_at DESC
 	`) as Playlist[];
 
@@ -23,7 +25,11 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-	create: async ({ request }) => {
+	create: async ({ request, locals }) => {
+		if (!locals.userInfo) {
+			redirect(303, '/login');
+		}
+
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString()?.trim();
 		const description = formData.get('description')?.toString()?.trim() || null;
@@ -34,7 +40,7 @@ export const actions = {
 
 		await sql`
 			INSERT INTO playlists (name, description, user_id)
-			VALUES (${name}, ${description}, ${USER_ID})
+			VALUES (${name}, ${description}, ${locals.userInfo.id})
 		`;
 	}
 } satisfies Actions;
