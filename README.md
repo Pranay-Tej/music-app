@@ -33,6 +33,7 @@ A music app database schema, schema design, and migrations with PostgreSQL.
 - [ ] Fuzzy search (songs, artists and albums)
 - [x] Followers/Social (self-referential many-to-many)
 - [ ] Song Genres/Tags (many-to-many junction table, multi-table joins)
+  - [ ] genre name field trim, case insensitive unique
 - [ ] Listening History/Play Counts (aggregation, GROUP BY, "most played", "recently played")
 - [ ] Reviews/Ratings (aggregation, HAVING, LEFT JOIN filtering, "top rated albums")
 - [ ] Move SQL queries to separate `.sql` files for auto-formatting with `prettier-plugin-sql`
